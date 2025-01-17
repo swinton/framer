@@ -1,0 +1,16 @@
+#!/bin/bash
+
+# Check if a filename was provided
+if [ -z "$1" ]; then
+  echo "Usage: $0 <filename>"
+  exit 1
+fi
+
+output="$( mktemp -d )/framed.jpg"
+
+curl $FRAMER_HOST/process-image \
+  --request POST \
+  --form "image=@${1}" \
+  --output "$output"
+
+open "$output"
